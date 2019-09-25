@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400..700" />
+  <style>
+    body{
+      margin: 0;
+      font-size: 18px;
+    }
+
+    header{
+      font-family: 'Literata', serif;
+      font-weight: 700;
+      height: 80vh;
+      background: maroon;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 2em;
+      background: linear-gradient(45deg, #C53030, #E53E3E);
+    }
+
+    #title{
+      max-width: 44rem;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 0.8;
+      padding: 0 4rem;
+    }
+
+    main{
+      background: #F7FAFC;
+    }
+
+    .container{
+      background: #fff;
+      max-width: 40em;
+      padding: 2em 4em;
+      position: relative;
+      margin: 0 auto;
+      transform: translateY(-1em);
+      box-shadow: 
+        0 0 15px rgba(113, 128, 150,0.2),
+        0 0 5px rgba(113, 128, 150, 0.5);
+    }
+
+    #page{
+      line-height: 1.5;
+      font-family: Literata, serif;
+      font-weight: 400;
+      color: #1A202C;
+    }
+
+    #dropcap{
+      font-size: 5em;
+      float: left;
+      line-height: .75;
+      width: 5rem;
+      background: linear-gradient(45deg, #44337A, #553C9A 66%, #6B46C1);
+      color: #fff;
+      height: 5rem;
+      text-align: center;
+      margin-right: 10px;
+    }
+
+    .smallcaps {
+      text-transform: uppercase;
+      font-size: .6em;
+      font-weight: 900;
+    }    
+
+  </style>
+</head>
+<body>
+  <header id="header">
+    <h1 id="title">Variable fonts are awesome!</h1>
+  </header>
+  <main>
+    <div id="page" class="container">
+      <p><span id="dropcap">A</span>wesome for two simple reasons: we can make smooth transitions between font weights (did you see the title change as you scrolled?) and, more importantly, we get <em>all</em> those font weights for the <em>same download size</em> as we used for a single weight.</p>
+
+      <h2>What the heck is a variable font?</h2>
+
+      <p>A font file holds the shapes of each of the letters of the alphabet (and everything else you can type). You may have noticed that when you <em>italicize</em> or <strong>bold</strong> text, those letters are a different shape (i <span class="smallcaps">vs</span> <em>i</em>, b <span class="smallcaps">vs</span> <strong>b</strong>). Before variable fonts, each weight and slant required a separate file (and extra files for each combination of those).</p>
+
+      <p>When we build websites, we want to minimize the amount of data to download before we can show the page. For most pages, giving people something to read is pretty important. That meant it was important to limit the number of fonts (and font weights and slants).</p>
+
+      <p>Variable fonts hold the the shapes of at least two different versions of each letter, for example a regular version and a bold version. If you ask for something in between those, the variable font format tells your computer exactly how to figure out what that looks like. The <a href="https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts#axes_definitions">spec</a> gives five standard variables for a font: weight (boldness), slant (italicness), italics (actual italics, which can include different shapes or flourishes), width (how wide each letter should be), and optical size (to allow typographers to add more details which only show up on larger letters). The spec also allows fontmakers to add custom variables (for a wild example, see the <a href="https://variable-font-experiments.glitch.me/">Decorvar example</a> from Googler Mustafa Kurtuldu).</p>
+
+      <h2>Should I use this?</h2>
+
+      <p>Not yet (as of September 2019). Variable fonts are only usable on browsers for the past year or so, and only on some operating systems. If you wanted to get your fonts through Google Fonts, there are only 10 available and they require an API that's still in beta. Plus, you might run in to some bugs (I tried putting a text shadow on the title, but Firefox wouldn't hang on to it as the weight changed).</p>
+
+      <p>If you're building something for an audience that's mostly on newer browsers, you can rely on your fallback fonts to support the part of your audience that's using an older one. You can also use the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide#Working_with_older_browsers">@supports query</a> to cordon off any styling that requires your variable font to work.</p>
+
+      <p>But I'm excited to use variable fonts in more projects, and I'm to see how a thousand different styles opens up our design options.</p>
+
+    </div>
+  </main>
+  <script>
+    var title = document.getElementById("title");
+    var page = document.getElementById("page");
+    var header = document.getElementById("header");
+    var dropcap = document.getElementById("dropcap");
+    var titleWeightBase = 300;
+    var pageTopBase = 4;
+    var dropcapWeightBase = 300;
+
+    document.addEventListener("scroll", function(e){
+      var scrollAmount = 1 - ((header.offsetHeight - window.scrollY) / header.offsetHeight);
+      var scrollPercentage = Math.min(1, scrollAmount);
+      var titleWeight = 700 - (titleWeightBase * scrollPercentage * 2);
+      var pageTop = 1 + (pageTopBase * scrollPercentage);
+      var dropcapWeight = 400 + (dropcapWeightBase * scrollPercentage)
+      
+      title.style = "font-weight: "+titleWeight;
+      page.style = "transform: translateY(-"+pageTop+"em)";
+      dropcap.style = "font-weight: "+dropcapWeight;
+    })
+  </script>
+</body>
+</html>
